@@ -33,8 +33,8 @@ public class MyPlayerC : MonoBehaviour
         input();
         beforeMove();
         Move();
-        beforeJump();
-        Jump();
+        //beforeJump();
+        //Jump();
     }
     private void LateUpdate()
     {
@@ -58,7 +58,7 @@ public class MyPlayerC : MonoBehaviour
         if (isAxisRaw) 
         {
             inputX = Input.GetAxisRaw("Horizontal");
-            inputY = Input.GetAxisRaw("Jump");
+            //inputY = Input.GetAxisRaw("Jump");
         }
         else
         {
