@@ -14,8 +14,7 @@ public class MyPlayerC : MonoBehaviour
     Vector2 _speed;
     [SerializeField]
     float moveSpeed = 5;
-    [SerializeField]
-    float jumpSpeed = 10;
+
     Vector3 _newPosition;
     Transform transform_;
 
@@ -113,12 +112,71 @@ public class MyPlayerC : MonoBehaviour
             rayLength += Mathf.Abs(_newPosition.y);
         }
         Vector2 RayCenter = RayCheckBox.center;
+        Vector2 RayLeft = RayCheckBox.center;
+        Vector2 RayRight = RayCheckBox.center;
+        RayLeft.y += RayOffset;
+        RayRight.y += RayOffset;
         RayCenter.y += RayOffset;
-        RaycastHit2D[] hitInfo = new RaycastHit2D[1];
+        RayLeft.x -= 0.5f;
+        RayRight.x += 0.5f;
+        RaycastHit2D[] hitInfo = new RaycastHit2D[3];
+
         hitInfo[0] = RayCast(RayCenter, -Vector2.up, rayLength, PlatformMask, Color.red, true);
+        hitInfo[1] = RayCast(RayLeft, -Vector2.up, rayLength, PlatformMask, Color.red, true);
+        hitInfo[2] = RayCast(RayRight, -Vector2.up, rayLength, PlatformMask, Color.red, true);
         if (hitInfo[0])
         {
             StandingOn = hitInfo[0].collider.gameObject;
+            isFalling = false;
+            isCollDown = true;
+            if (helpMoveParam.y > 0)
+            {
+                _newPosition.y = _speed.y * Time.deltaTime;
+                isCollDown = false;
+            }
+            else
+            {
+                _newPosition.y = -Mathf.Abs(hitInfo[0].point.y - RayCenter.y) +
+                    RayCheckBox.height / 2 + RayOffset;
+            }
+            if (Mathf.Abs(_newPosition.y) < _smallValue)
+            {
+                _newPosition.y = 0;
+            }
+            else
+            {
+                isCollDown = false;
+
+            }
+        }
+        if (hitInfo[1])
+        {
+            StandingOn = hitInfo[1].collider.gameObject;
+            isFalling = false;
+            isCollDown = true;
+            if (helpMoveParam.y > 0)
+            {
+                _newPosition.y = _speed.y * Time.deltaTime;
+                isCollDown = false;
+            }
+            else
+            {
+                _newPosition.y = -Mathf.Abs(hitInfo[0].point.y - RayCenter.y) +
+                    RayCheckBox.height / 2 + RayOffset;
+            }
+            if (Mathf.Abs(_newPosition.y) < _smallValue)
+            {
+                _newPosition.y = 0;
+            }
+            else
+            {
+                isCollDown = false;
+
+            }
+        }
+        if (hitInfo[2])
+        {
+            StandingOn = hitInfo[2].collider.gameObject;
             isFalling = false;
             isCollDown = true;
             if (helpMoveParam.y > 0)
@@ -175,7 +233,11 @@ public class MyPlayerC : MonoBehaviour
         {
             return;
         }
-        _speed.y = Mathf.Sqrt(2f * JumpPower * Mathf.Abs(Gravity));
+        _speed.y = Mathf.Sqrt(1f * JumpPower * Mathf.Abs(Gravity));
+        if (_speed.y > 10)
+        {
+            _speed.y = 10;
+        }
         helpMoveParam.y = _speed.y;
     }
 
@@ -234,13 +296,5 @@ public class MyPlayerC : MonoBehaviour
     {
         transform_.Translate(_newPosition,Space.World);
     }
-    void beforeJump()
-    {
-        _speed.y = inputY * jumpSpeed;
-        _newPosition = _speed * Time.deltaTime;
-    }
-    void Jump()
-    {
-        transform_.Translate(_newPosition, Space.World);
-    }
+
 }
