@@ -319,7 +319,6 @@ MonoBehaviour:
   inputY: 0
   isAxisRaw: 1
   moveSpeed: 10
-  jumpSpeed: 10
   isGravity: 1
   floatingRate: 0
   _boxCollider: {fileID: 554383697}
@@ -573,7 +572,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

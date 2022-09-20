@@ -45,11 +45,12 @@ public class CameraC : MonoBehaviour
             {
                 _lookAheadPos = Vector3.MoveTowards(_lookAheadPos, Vector3.zero, Time.deltaTime * resetSpeed);
             }
+        }
             Vector3 aheadtargetPos = _target.position + _lookAheadPos + Vector3.forward * _offsetz + CameraOffset;
                 Vector3 newCameraPostion = Vector3.Lerp(transform.position,aheadtargetPos,Time.deltaTime*followSpeed);
                 transform.position = newCameraPostion;
                 _lastTargetPosition = _target.position;
-        }
+        
     }
 
 }
