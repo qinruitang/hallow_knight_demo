@@ -359,6 +359,8 @@
 "Assets/NewBehaviourScript.cs"
 "Assets/script/CameraC.cs"
 "Assets/script/MyPlayerC.cs"
+"Assets/script/MyPlayerC1.cs"
+"Assets/script/PlayerC.cs"
 -langversion:9.0
 
 /deterministic

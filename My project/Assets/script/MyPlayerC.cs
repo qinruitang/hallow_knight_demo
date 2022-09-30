@@ -100,8 +100,32 @@ public class MyPlayerC : MonoBehaviour
     {
         SetRayparam();
         RayCheckFoot();
+        RayCheckHead();
         
     }
+
+    void RayCheckHead()
+    {
+        if (_newPosition.y < 0)
+        {
+            return;
+        }
+        float rayLength = headRayCheckLength;
+        rayLength += RayCheckBox.height / 2;
+        Vector2 rayCenter = RayCheckBox.center;
+        rayCenter.y += RayOffset;
+        RaycastHit2D[] hitInfo = new RaycastHit2D[1];
+        hitInfo[0] = RayCast(rayCenter, Vector2.up, rayLength, PlatformMask & ~CrossPlatformMask, Color.green, true);
+        if (hitInfo[0])
+        {
+            _speed.y = 0;
+            _newPosition.y = hitInfo[0].distance - RayCheckBox.height / 2;
+
+        }
+
+    }
+        
+
     void SetRayparam()
     {
         RayCheckBox = new Rect(_boxCollider.bounds.min.x,
